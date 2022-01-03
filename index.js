@@ -6,6 +6,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use(express.static('build'))
 
 morgan.token('body', req => {
     return JSON.stringify(req.body)
@@ -36,9 +37,6 @@ let persons = [
     }
 ]
 
-app.get('/', (request, response) => {
-    response.send('<h1>Phonebook App!</h1>')
-  })
 
 app.get('/info', (request, response) => {
     const time = new Date(Date.now())
@@ -63,12 +61,6 @@ app.get('/api/persons', (request, response) => {
     response.json(persons)
   })
 
-app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-  
-  response.status(204).end()
-})
 
 app.put('/api/persons/:id', (request, response) => {
 
